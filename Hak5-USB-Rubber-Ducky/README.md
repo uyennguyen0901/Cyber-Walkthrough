@@ -158,7 +158,7 @@ run"
 | Placeholder         | Replace With                          |
 |---------------------|---------------------------------------|
 | `<YOUR_AUTHKEY>`    | Tailscale auth key from Step 3.1      |
-| `<PI_TAILSCALE_IP>` | Pi Tailscale IP from Step 1.3         |
+| `<PI_TAILSCALE_IP>` | Pi Tailscale IP from Step 1.2         |
 
 #### 3.2 Flash to Ducky
 
